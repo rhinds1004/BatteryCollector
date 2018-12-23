@@ -19,10 +19,20 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//THe pickup to spawn
+	//THe pickup to spawn. TSubClassOf restricts what to spawn to only classes that inherit APickup 
 	UPROPERTY(EditAnywhere, Category = "Spawning")
 	TSubclassOf<class APickup> WhatToSpawn;
 
+	///No macro since timers can't be properties
+	FTimerHandle SpawnTimer;
+
+	/**Minimum spawn delay*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+		float SpawnDelayRangeLow;
+
+	/**Maximum spawn delay*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+		float SpawnDelayRangeHigh;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -41,4 +51,7 @@ private:
 	
 	/** Handle spawning a new pickup*/
 	void SpawnPickup();
+
+	/** Current Spawn Delau */
+	float SpawnDelay;
 };
