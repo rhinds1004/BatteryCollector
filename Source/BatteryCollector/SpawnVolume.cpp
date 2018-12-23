@@ -2,6 +2,7 @@
 
 #include "SpawnVolume.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ASpawnVolume::ASpawnVolume()
@@ -31,5 +32,8 @@ void ASpawnVolume::Tick(float DeltaTime)
 FVector ASpawnVolume::GetRandomPointInVolume()
 {
 	FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
+	FVector SpawnExtend = WhereToSpawn->Bounds.BoxExtent;
+
+	return UKismetMathLibrary::RandomPointInBoundingBox(SpawnOrigin, SpawnExtend);
 }
 
