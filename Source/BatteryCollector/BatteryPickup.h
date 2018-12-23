@@ -20,4 +20,12 @@ public:
 	
 	/** Override the WasCollected function - use Implementation because it is a blueprint native event */
 	void WasCollected_Implementation();
+
+
+	float GetBatteryPower();
+
+protected:
+	/** Sets the amount of power the batery gives to the character */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", meta = (BlueprintProtected = "true"))
+	float BatteryPower;
 };

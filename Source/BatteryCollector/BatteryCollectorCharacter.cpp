@@ -50,9 +50,15 @@ ABatteryCollectorCharacter::ABatteryCollectorCharacter()
 	CollectionSphere->AttachTo(RootComponent);
 	CollectionSphere->SetSphereRadius(200.0f);
 
+	//Set A base power level for the character
+	InitialPower = 2000.0f;
+	CharacterPower = InitialPower;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // Input
@@ -84,6 +90,8 @@ void ABatteryCollectorCharacter::SetupPlayerInputComponent(class UInputComponent
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ABatteryCollectorCharacter::OnResetVR);
 }
+
+
 
 
 void ABatteryCollectorCharacter::OnResetVR()
@@ -164,4 +172,20 @@ void ABatteryCollectorCharacter::CollectPickups()
 		}
 
 	}
+}
+
+float ABatteryCollectorCharacter::GetInitialPower()
+{
+	return InitialPower;
+}
+
+float ABatteryCollectorCharacter::GetCurrentPower()
+{
+	return CharacterPower;
+}
+
+
+void ABatteryCollectorCharacter::UpdatePower(float PowerChange)
+{
+	CharacterPower += PowerChange;
 }

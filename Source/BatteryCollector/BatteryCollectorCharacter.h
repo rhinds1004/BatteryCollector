@@ -34,6 +34,20 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	//Get characters starting power
+	UFUNCTION(BlueprintPure, Category = "Power")
+	float GetInitialPower();
+
+	//Get characters current power level
+	UFUNCTION(BlueprintPure, Category = "Power")
+	float GetCurrentPower();
+
+	/** Update the character power level
+	* @param PowerChange This is the amount to change teh power by and it can be positive or negative
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Power")
+	void UpdatePower(float PowerChange);
+
 protected:
 
 	/** Resets HMD orientation in VR. */
@@ -72,6 +86,15 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Pickups")
 	void CollectPickups();
 
+	/**Starting power level of Character */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power")
+	float InitialPower;
+
+private:
+	/** Current Character power level */
+	UPROPERTY(VisibleAnywhere, Category = "Power")
+	float CharacterPower;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -79,5 +102,8 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	/** Returns CollectionSphere subobject */
 	FORCEINLINE class USphereComponent* GetCollectionSphere() const { return CollectionSphere; }
+
+
+
 };
 
