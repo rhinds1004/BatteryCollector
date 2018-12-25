@@ -12,6 +12,7 @@ ABatteryCollectorGameMode::ABatteryCollectorGameMode()
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
+		PrimaryActorTick.bStartWithTickEnabled = true;
 		PrimaryActorTick.bCanEverTick = true; //tick is set to false in gamemodebase
 	}
 

@@ -55,6 +55,10 @@ ABatteryCollectorCharacter::ABatteryCollectorCharacter()
 	InitialPower = 2000.0f;
 	CharacterPower = InitialPower;
 
+	//Set the dependence of the speed on the power level
+	SpeedFactor = 0.75f;
+	BaseSpeed = 10.0f;
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -169,7 +173,7 @@ void ABatteryCollectorCharacter::CollectPickups()
 			ABatteryPickup* const TestBattery = Cast<ABatteryPickup>(TestPickup);
 			if(TestBattery)
 			{
-			//	UE_LOG(LogTemp, Log, TEXT("power amount %f"), TestBattery->GetBatteryPower());
+			
 				UpdatePower(TestBattery->GetBatteryPower());
 			}
 			TestPickup->SetIsActive(false);
@@ -189,8 +193,14 @@ float ABatteryCollectorCharacter::GetCurrentPower()
 	return CharacterPower;
 }
 
-
+//called whenever power is increased or decreased
 void ABatteryCollectorCharacter::UpdatePower(float PowerChange)
 {
+	//change power
 	CharacterPower += PowerChange;
+	//change speed based on power
+	GetCharacterMovement()->MaxWalkSpeed = BaseSpeed + SpeedFactor * CharacterPower;
+	//call visual effect
+	PowerChangedEffect();
+
 }
