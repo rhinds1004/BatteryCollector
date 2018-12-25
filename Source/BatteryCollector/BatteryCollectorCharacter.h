@@ -86,6 +86,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Pickups")
 	void CollectPickups();
 
+	//TODO The CharacterPower is set to InitialPower only when the c++ instance is constructed, earlier than when we begin our design in  the BP editor. Therefore, we cannot really set the power level starting at game beginning, and  it is meaningless to set InitialPower EditAnywhere, unless we later assign InitialPower to CharacterPower (which, however, is set only VisibleAnywhere ) in EventBeginPlay, or do this in c++ BeginPlay().
 	/**Starting power level of Character */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power")
 	float InitialPower;

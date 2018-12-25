@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/SphereComponent.h"
 #include "Pickup.h"
+#include "BatteryPickup.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ABatteryCollectorCharacter
@@ -155,7 +156,6 @@ void ABatteryCollectorCharacter::CollectPickups()
 	//Get all overlapping actors and store them in an array
 	TArray<AActor*> CollectedActors;
 	CollectionSphere->GetOverlappingActors(CollectedActors);
-
 	//For each actor we collected
 	for (auto* CollectedActor : CollectedActors)
 	{
@@ -166,12 +166,17 @@ void ABatteryCollectorCharacter::CollectPickups()
 		{
 			//Call pickup's WasCollected function
 			TestPickup->WasCollected();
-
-			//Deactive the pickup
+			ABatteryPickup* const TestBattery = Cast<ABatteryPickup>(TestPickup);
+			if(TestBattery)
+			{
+			//	UE_LOG(LogTemp, Log, TEXT("power amount %f"), TestBattery->GetBatteryPower());
+				UpdatePower(TestBattery->GetBatteryPower());
+			}
 			TestPickup->SetIsActive(false);
 		}
-
+		
 	}
+
 }
 
 float ABatteryCollectorCharacter::GetInitialPower()
