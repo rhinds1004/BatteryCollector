@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Blueprint/UserWidget.h"
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "BatteryCollectorGameMode.generated.h"
@@ -21,13 +22,13 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Power")
 	float GetPowerToWin() const;
 
-	virtual void BeginPlay() override;
+	
 protected:
 	/** The rate at which the character loses power */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Power", meta = (BlueprintProtected = "true"))
 	float DecayRate;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Power", meta = (BlueprintProtected = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", meta = (BlueprintProtected = "true"))
 	float PowerToWin;
 
 	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = "Power", meta = (BlueprintProtected = "true"))
@@ -41,6 +42,7 @@ protected:
 	UPROPERTY()
 	class UUserWidget* CurrentWidget;
 
+	virtual void BeginPlay() override;
 
 };
 

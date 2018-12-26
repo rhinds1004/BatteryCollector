@@ -15,7 +15,7 @@
 //////////////////////////////////////////////////////////////////////////
 // ABatteryCollectorCharacter
 
-ABatteryCollectorCharacter::ABatteryCollectorCharacter()
+ABatteryCollectorCharacter::ABatteryCollectorCharacter() : InitialPower(2000.0f)
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -52,7 +52,7 @@ ABatteryCollectorCharacter::ABatteryCollectorCharacter()
 	CollectionSphere->SetSphereRadius(200.0f);
 
 	//Set A base power level for the character
-	InitialPower = 2000.0f;
+	
 	CharacterPower = InitialPower;
 
 	//Set the dependence of the speed on the power level
