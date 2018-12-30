@@ -4,7 +4,9 @@
 #include "BatteryCollectorCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/GameplayStatics.h"
+#include "SpawnVolume.h"
 #include "Blueprint/UserWidget.h"
+#include "EngineUtils.h"
 
 ABatteryCollectorGameMode::ABatteryCollectorGameMode()
 {
@@ -41,6 +43,25 @@ void ABatteryCollectorGameMode::BeginPlay()
 		{
 			CurrentWidget->AddToViewport();
 		}
+	}
+/*
+	//find all spawn volume AActors
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASpawnVolume::StaticClass(), FoundActors);
+
+	for (auto Actor : FoundActors)
+	{
+		ASpawnVolume* SpawnVolumeActor = Cast<ASpawnVolume>(Actor);
+		if (SpawnVolumeActor)
+		{
+			SpawnVolumeActors.AddUnique(SpawnVolumeActor);
+		}
+	}
+	*/
+
+	for (TActorIterator<ASpawnVolume> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		SpawnVolumeActors.AddUnique(*ActorItr);
 	}
 }
 

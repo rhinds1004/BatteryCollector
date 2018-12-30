@@ -27,8 +27,7 @@ void ASpawnVolume::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SpawnDelay = FMath::FRandRange(SpawnDelayRangeLow, SpawnDelayRangeHigh);
-	GetWorldTimerManager().SetTimer(SpawnTimer, this, &ASpawnVolume::SpawnPickup, SpawnDelay, false);
+
 	
 }
 
@@ -45,6 +44,21 @@ FVector ASpawnVolume::GetRandomPointInVolume()
 	FVector SpawnExtend = WhereToSpawn->Bounds.BoxExtent;
 
 	return UKismetMathLibrary::RandomPointInBoundingBox(SpawnOrigin, SpawnExtend);
+}
+
+void ASpawnVolume::SetSpawningActive(bool bShouldSpawn)
+{
+	if (bShouldSpawn)
+	{
+		//Set the timer on Spawn Pickup
+		SpawnDelay = FMath::FRandRange(SpawnDelayRangeLow, SpawnDelayRangeHigh);
+		GetWorldTimerManager().SetTimer(SpawnTimer, this, &ASpawnVolume::SpawnPickup, SpawnDelay, false);
+	}
+	else
+	{
+		//clear the timer on Spawn pickup
+		GetWorldTimerManager().ClearTimer(SpawnTimer);
+	}
 }
 
 void ASpawnVolume::SpawnPickup()
